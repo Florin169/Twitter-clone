@@ -2,10 +2,13 @@ import React from "react";
 import { Google } from "react-bootstrap-icons";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
   const logIn = () => {
-    signInWithPopup(auth, provider);
+    signInWithPopup(auth, provider).then(() => navigate("/home"));
   };
 
   return (

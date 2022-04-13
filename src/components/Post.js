@@ -9,15 +9,20 @@ import React, { useEffect, useState } from "react";
 import { Chat, Heart, ArrowDownUp, HeartFill } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { db } from "../firebase";
-import { commentsActions, postIdActions } from "../redux/twitterActions";
+import {
+  commentsActions,
+  modalTrueActions,
+  postIdActions,
+} from "../redux/twitterActions";
 import ReplyModal from "./ReplyModal";
 
-const Post = ({ post, id, toggleModal, setToggleModal }) => {
+const Post = ({ post, id }) => {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState([]);
 
   const dispatch = useDispatch();
   const comments = useSelector((state) => state.twitter.comments);
+  const toggleModal = useSelector((state) => state.twitter.toggleModal);
 
   useEffect(() => {
     onSnapshot(collection(db, "posts", id, "likes"), (snapshot) => {
@@ -67,11 +72,11 @@ const Post = ({ post, id, toggleModal, setToggleModal }) => {
           alt=""
           className="rounded-2xl max-h-[600px] my-2"
         />
-        <div className="flex w-[500px]  px-14 py-2 justify-between">
+        <div className="flex   px-14 py-2 justify-between">
           <div
             className="cursor-pointer hover:text-blue-400 flex items-center space-x-2"
             onClick={() => {
-              setToggleModal(true);
+              dispatch(modalTrueActions());
               dispatch(postIdActions(id));
             }}
           >
@@ -92,7 +97,7 @@ const Post = ({ post, id, toggleModal, setToggleModal }) => {
           </div>
         </div>
       </div>
-      {toggleModal && <ReplyModal setToggleModal={setToggleModal} />}
+      {toggleModal && <ReplyModal />}
     </div>
   );
 };

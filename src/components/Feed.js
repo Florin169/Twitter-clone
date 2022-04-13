@@ -5,7 +5,7 @@ import Input from "./Input";
 import Post from "./Post";
 import { db } from "../firebase";
 
-const Feed = ({ setToggleModal, toggleModal }) => {
+const Feed = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -26,13 +26,7 @@ const Feed = ({ setToggleModal, toggleModal }) => {
       <div className="divide-y divide-gray-600 overscroll-contain">
         <Input />
         {posts.map((post) => (
-          <Post
-            key={post.id}
-            id={post.id}
-            post={post.data()}
-            setToggleModal={setToggleModal}
-            toggleModal={toggleModal}
-          />
+          <Post key={post.id} id={post.id} post={post.data()} />
         ))}
       </div>
     </div>

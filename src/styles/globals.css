@@ -10,6 +10,6 @@
 
 @layer components {
   .icon {
-    @apply w-12 h-12 xl:h-14 rounded-full  flex justify-center items-center mb-3 hover:bg-[#413f3f] transition duration-300 ease-out xl:px-4;
+    @apply w-12 h-12 xl:h-14 rounded-full  flex justify-center items-center mb-3 hover:bg-[#33373d] transition duration-300 ease-out xl:px-4;
   }
 }

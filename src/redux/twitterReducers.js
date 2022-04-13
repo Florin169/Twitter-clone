@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
   postId: "",
   comments: [],
+  toggleModal: false,
 };
 
 const twitterReducers = (state = INITIAL_STATE, action) => {
@@ -15,6 +16,18 @@ const twitterReducers = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         comments: action.payload,
+      };
+
+    case "TOGGLE_MODAL_TRUE":
+      return {
+        ...state,
+        toggleModal: true,
+      };
+
+    case "TOGGLE_MODAL_FALSE":
+      return {
+        ...state,
+        toggleModal: false,
       };
 
     default:

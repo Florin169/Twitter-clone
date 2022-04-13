@@ -1,13 +1,15 @@
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { X } from "react-bootstrap-icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { db } from "../firebase";
+import { modalFalseActions } from "../redux/twitterActions";
 import Input from "./Input";
 
-const ReplyModal = ({ setToggleModal }) => {
+const ReplyModal = () => {
   const [singlePost, setSinglePost] = useState([]);
 
+  const dispatch = useDispatch();
   const postId = useSelector((state) => state.twitter.postId);
 
   useEffect(() => {
@@ -23,7 +25,7 @@ const ReplyModal = ({ setToggleModal }) => {
           <X
             size={30}
             className="cursor-pointer"
-            onClick={() => setToggleModal(false)}
+            onClick={() => dispatch(modalFalseActions())}
           />
         </div>
 

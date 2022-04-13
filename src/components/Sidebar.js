@@ -11,8 +11,13 @@ import {
   ThreeDots,
 } from "react-bootstrap-icons";
 import Category from "./Category";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="hidden fixed sm:flex sm:flex-col sm:items-center  w-[114px] lg:w-[315px] lg:pl-56 xl:w-[480px] h-full   xl:pl-56 py-5 text-white ">
       <div>
@@ -30,11 +35,19 @@ const Sidebar = () => {
         Tweet
       </button>
       <div className="icon mt-auto flex items-center justify-between w-[80%] cursor-pointer sm:ml-12">
-        <div className="flex  space-x-2">
-          <div className="w-11 h-11 rounded-full bg-violet-400 "></div>
+        <div
+          className="flex  space-x-2"
+          onClick={() => signOut(auth).then(() => navigate("/"))}
+        >
+          <img
+            src={auth.currentUser?.photoURL}
+            alt=""
+            className="w-11 h-11 rounded-full object-cover"
+          />
+
           <div className="hidden xl:block">
-            <p>Name</p>
-            <p>@name</p>
+            <p>{auth.currentUser?.displayName}</p>
+            <p>@{auth.currentUser?.displayName}</p>
           </div>
         </div>
         <ThreeDots className="hidden xl:block cursor-pointer" />
