@@ -19,13 +19,23 @@ const ReplyModal = () => {
   }, [postId]);
 
   return (
-    <div className="fixed inset-0  flex justify-center  text-white h-screen w-full bg-black/30 overscroll-auto">
+    <div
+      className="fixed inset-0  flex justify-center  text-white h-screen w-full bg-black/30 overscroll-auto z-50 cursor-default"
+      onClick={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      }}
+    >
       <div className="sm:mt-20 sm:ml-[30%] fixed inset-0 w-full h-screen sm:max-h-[345px] sm:max-w-[600px] bg-[#15202B] rounded-2xl px-3 py-3 ">
         <div className="w-full ">
           <X
             size={30}
             className="cursor-pointer"
-            onClick={() => dispatch(modalFalseActions())}
+            onClick={(e) => {
+              dispatch(modalFalseActions());
+              e.preventDefault();
+              e.stopPropagation();
+            }}
           />
         </div>
 

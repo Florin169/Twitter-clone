@@ -5,6 +5,7 @@ import Sidebar from "./components/Sidebar";
 import LoginPage from "./pages/LoginPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Trends from "./components/Trends";
+import CommentsPage from "./pages/CommentsPage";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
               </>
             }
           />
+          <Route path="/home/:id" element={<CommentsPage />} />
         </Route>
         <Route path="/" element={<LoginPage />} />
       </Routes>

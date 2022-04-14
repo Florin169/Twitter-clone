@@ -2,6 +2,7 @@ const INITIAL_STATE = {
   postId: "",
   comments: [],
   toggleModal: false,
+  posts: [],
 };
 
 const twitterReducers = (state = INITIAL_STATE, action) => {

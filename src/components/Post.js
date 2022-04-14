@@ -15,14 +15,16 @@ import {
   postIdActions,
 } from "../redux/twitterActions";
 import ReplyModal from "./ReplyModal";
-
+import { Link, useNavigate } from "react-router-dom";
 const Post = ({ post, id }) => {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState([]);
 
   const dispatch = useDispatch();
   const comments = useSelector((state) => state.twitter.comments);
+  const postId = useSelector((state) => state.twitter.postId);
   const toggleModal = useSelector((state) => state.twitter.toggleModal);
+  const navigate = useNavigate();
 
   useEffect(() => {
     onSnapshot(collection(db, "posts", id, "likes"), (snapshot) => {
@@ -52,30 +54,35 @@ const Post = ({ post, id }) => {
   }, [db, id]);
 
   return (
-    <div className="p-3 flex relative">
+    <div
+      className="p-3 flex relative cursor-pointer"
+      onClick={() => navigate(`/home/${id}`)}
+    >
       <div className="h-full mr-4">
         <div className="w-10 h-10">
           <img
-            src={post.userImg}
+            src={post?.userImg}
             className="rounded-full w-full h-full object-cover "
           />
         </div>
       </div>
-      <div>
+      <div className="w-full">
         <div className="space-x-1">
           <span>{post.username}</span>
           <span className="text-gray-400 text-sm">@{post.username}</span>
         </div>
-        <p className="mt-2">{post.text}</p>
+        <p className="mt-2 text-lg font-medium">{post.text}</p>
         <img
           src={post.image}
           alt=""
           className="rounded-2xl max-h-[600px] my-2"
         />
-        <div className="flex   px-14 py-2 justify-between">
+        <div className="flex  px-14 py-2 justify-between">
           <div
             className="cursor-pointer hover:text-blue-400 flex items-center space-x-2"
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
               dispatch(modalTrueActions());
               dispatch(postIdActions(id));
             }}
@@ -88,7 +95,11 @@ const Post = ({ post, id }) => {
           </div>
           <div
             className="flex items-center space-x-2 cursor-pointer hover:text-red-500"
-            onClick={updateLikes}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              updateLikes();
+            }}
           >
             {liked ? <HeartFill className="text-red-500" /> : <Heart />}
             {likes.length > 0 && (

@@ -20,7 +20,7 @@ import { auth, db, storage } from "../firebase";
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
 import { useDispatch, useSelector } from "react-redux";
-import { commentsActions } from "../redux/twitterActions";
+import { commentsActions, modalFalseActions } from "../redux/twitterActions";
 
 const Input = ({ modal }) => {
   const selectImgRef = useRef(null);
@@ -59,6 +59,9 @@ const Input = ({ modal }) => {
     } else {
       await setDoc(doc(db, "posts", postId, "comments", auth.currentUser.uid), {
         comment: input,
+        name: auth.currentUser.displayName,
+        userImg: auth.currentUser.photoURL,
+        timestamp: serverTimestamp(),
       }).catch((error) => error.message);
       dispatch(commentsActions(postId));
     }
@@ -153,7 +156,10 @@ const Input = ({ modal }) => {
             className={`${
               input === "" && "bg-blue-500/30 text-white/30 cursor-not-allowed"
             } w-28 h-10 rounded-full bg-blue-500`}
-            onClick={sendPost}
+            onClick={() => {
+              sendPost();
+              modal && dispatch(modalFalseActions());
+            }}
           >
             Tweet
           </button>
